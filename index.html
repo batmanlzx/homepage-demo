@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>我的主页 · homepage-demo</title>
+<meta name="description" content="个人主页 —— 三周作业的家。" />
+<style>
+  :root{
+    --bg:#0b1020;
+    --bg2:#111a33;
+    --card:rgba(255,255,255,.055);
+    --line:rgba(255,255,255,.12);
+    --text:#e8ecf8;
+    --muted:#9aa6c4;
+    --accent:#6ea8fe;
+    --accent2:#8b5cf6;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(900px 500px at 12% -8%, rgba(110,168,254,.22), transparent 60%),
+      radial-gradient(800px 500px at 92% 4%, rgba(139,92,246,.20), transparent 60%),
+      linear-gradient(180deg,var(--bg) 0%, var(--bg2) 55%, var(--bg) 100%);
+    background-attachment:fixed;
+    color:var(--text);
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    padding:0 20px 60px;
+  }
+  .wrap{max-width:860px;margin:0 auto}
+
+  /* ---------- 顶部 ---------- */
+  header{padding:74px 0 40px;text-align:center}
+  .avatar{
+    width:104px;height:104px;margin:0 auto 22px;
+    border-radius:50%;
+    display:grid;place-items:center;
+    font-size:42px;font-weight:700;letter-spacing:1px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    box-shadow:0 18px 40px -12px rgba(110,168,254,.65), 0 0 0 6px rgba(255,255,255,.06);
+    user-select:none;
+  }
+  h1{font-size:clamp(28px,6vw,40px);line-height:1.3;letter-spacing:.5px}
+  .subtitle{margin-top:12px;color:var(--muted);font-size:clamp(14px,3.4vw,17px)}
+  .badge{
+    display:inline-block;margin-top:18px;padding:5px 14px;border-radius:999px;
+    font-size:13px;color:#cfe0ff;
+    background:rgba(110,168,254,.12);
+    border:1px solid rgba(110,168,254,.35);
+  }
+
+  /* ---------- 通用板块 ---------- */
+  section{margin-top:34px}
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 26px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(110,168,254,.45);
+    box-shadow:0 20px 40px -24px rgba(110,168,254,.7);
+  }
+  h2{
+    font-size:17px;letter-spacing:1.5px;color:#cdd8f5;
+    display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  }
+  h2::before{
+    content:"";width:4px;height:18px;border-radius:2px;
+    background:linear-gradient(180deg,var(--accent),var(--accent2));
+    display:inline-block;flex:0 0 auto;
+  }
+  p{color:#c6cfe6}
+  .muted{color:var(--muted);font-size:14px}
+
+  /* ---------- 三周路线图 ---------- */
+  .weeks{display:grid;gap:14px}
+  .week{
+    display:flex;gap:16px;align-items:flex-start;
+    padding:16px;border-radius:14px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .week .no{
+    flex:0 0 40px;height:40px;border-radius:12px;display:grid;place-items:center;
+    font-weight:700;font-size:15px;color:#0b1020;
+    background:linear-gradient(135deg,#9ec5ff,#c4b5fd);
+  }
+  .week h3{font-size:15px;margin-bottom:4px;color:#eaf0ff}
+  .week .tag{
+    font-size:12px;color:#a8ffcf;background:rgba(52,211,153,.12);
+    border:1px solid rgba(52,211,153,.3);
+    padding:1px 8px;border-radius:999px;margin-left:8px;white-space:nowrap;
+  }
+  .week .tag.todo{color:#ffd9a8;background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.3)}
+
+  /* ---------- 链接 ---------- */
+  .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  a.link{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 16px;border-radius:14px;text-decoration:none;
+    color:var(--text);
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.09);
+    transition:background .2s ease,border-color .2s ease,transform .2s ease;
+  }
+  a.link:hover{background:rgba(110,168,254,.14);border-color:rgba(110,168,254,.5);transform:translateX(3px)}
+  a.link svg{flex:0 0 20px;opacity:.9}
+  a.link .t{font-size:14.5px}
+  a.link .d{font-size:12px;color:var(--muted)}
+
+  /* ---------- 技能 ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{
+    font-size:13px;padding:5px 13px;border-radius:999px;
+    color:#d7e2ff;background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+  }
+
+  /* ---------- 页脚 ---------- */
+  footer{
+    margin-top:52px;padding-top:22px;text-align:center;
+    border-top:1px solid rgba(255,255,255,.09);
+    color:var(--muted);font-size:13px;
+  }
+  footer code{
+    background:rgba(255,255,255,.07);padding:2px 7px;border-radius:6px;
+    font-size:12.5px;color:#cfe0ff;
+  }
+  @media (max-width:520px){
+    header{padding:48px 0 26px}
+    .card{padding:20px 18px}
+    a.link:hover{transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="avatar" aria-hidden="true">我</div>
+    <h1>你好，我是 <span style="background:linear-gradient(90deg,#9ec5ff,#c4b5fd);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">你的名字</span></h1>
+    <p class="subtitle">这里是 homepage-demo —— 我未来三周所有作业的家。</p>
+    <span class="badge">已部署到公网 · 手机可访问</span>
+  </header>
+
+  <section>
+    <div class="card">
+      <h2>关于我</h2>
+      <p>
+        我在学习 AI Agent 与自动化，喜欢把学到的东西动手做成能跑起来的小项目。
+        这个页面本身就是第一份作业：一个仓库、一个公网网址，后面三周的内容都会往这里搬。
+      </p>
+      <p class="muted" style="margin-top:12px">
+        想改这一页？直接编辑仓库里的 <code>index.html</code>，提交后 Vercel 会自动重新部署。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>三周路线图</h2>
+      <div class="weeks">
+        <div class="week">
+          <div class="no">1</div>
+          <div>
+            <h3>搭建家：仓库 + 公网主页 <span class="tag">已完成</span></h3>
+            <p class="muted">建公开仓库 homepage-demo，写 index.html，部署到 Vercel，手机验证。</p>
+          </div>
+        </div>
+        <div class="week">
+          <div class="no">2</div>
+          <div>
+            <h3>自动化 Agent 雏形 <span class="tag todo">进行中</span></h3>
+            <p class="muted">让 Agent 定时抓信息、分析、产出日报，并把结果沉淀到这个仓库。</p>
+          </div>
+        </div>
+        <div class="week">
+          <div class="no">3</div>
+          <div>
+            <h3>整合与展示 <span class="tag todo">待开始</span></h3>
+            <p class="muted">把三周的成果整理成可展示的作品集，主页作为统一入口。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>我的链接</h2>
+      <div class="links">
+        <a class="link" href="https://github.com/batmanlzx/homepage-demo" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5 3.3 9.3 7.9 10.8.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.8C23.5 5.7 18.3.5 12 .5z"/></svg>
+          <span><span class="t">GitHub 仓库</span><br /><span class="d">github.com/batmanlzx/homepage-demo</span></span>
+        </a>
+        <a class="link" href="https://vercel.com/" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 23 21H1L12 2z"/></svg>
+          <span><span class="t">Vercel 部署</span><br /><span class="d">vercel.com</span></span>
+        </a>
+        <a class="link" href="mailto:you@example.com">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>
+          <span><span class="t">邮箱</span><br /><span class="d">you@example.com</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>技能标签</h2>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">AI Agent</span>
+        <span class="chip">自动化流程</span>
+        <span class="chip">数据分析</span>
+        <span class="chip">HTML / CSS</span>
+        <span class="chip">Git &amp; GitHub</span>
+        <span class="chip">Vercel 部署</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year">2025</span> 你的名字 · 由 <code>index.html</code> 单文件驱动，托管在 Vercel</p>
+  </footer>
+
+</div>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
